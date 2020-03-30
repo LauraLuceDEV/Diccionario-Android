@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">Mi-Diccionario</string>
+    <!--MainActivity-->
+    <string name="bienvenida">BIENVENIDO</string>
+    <string name="intro">INTRODUCIR PALABRAS</string>
+    <string name="consult">CONSULTAR PALABRAS</string>
+    <string name="test">EJERCICIOS PARA PRACTICAR</string>
+
+    <!--IntroducirPalabraActivity-->
+    <string name="insert_head">INSERTE LOS DATOS DE LA PALABRA</string>
+    <string name="palabra_esp">PALABRA EN ESPAÑOL:</string>
+    <string name="palabra_ing">PALABRA EN INGLÉS:</string>
+    <string name="tipo_palab">TIPO DE PALABRA:</string>
+    <string name="palab_hint_esp">Coche</string>
+    <string name="palab_hint_eng">Car</string>
+    <string name="palab_hint_tipo">Sustantivo</string>
+    <string name="insert">INSERTAR</string>
+
+    <!--ConsultasActivity-->
+    <string name="custom_query">BÚSQUEDA PERSONALIZADA</string>
+    <string name="select_query">BÚSQUEDA CONCRETA</string>
+    <string name="consultas_head">CONSULTAS</string>
+    <string name="order1">1 ORDEN</string>
+    <string name="order2">2 ORDEN</string>
+    <string name="order3">3 ORDEN</string>
+    <string name="busqueda">BÚSQUEDA</string>
+    <string name="busqueda_palbExpr">Palabra a búscar</string>
+</resources>
