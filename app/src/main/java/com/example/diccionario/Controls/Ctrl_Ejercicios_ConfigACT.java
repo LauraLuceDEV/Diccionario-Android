@@ -13,6 +13,7 @@ import java.util.List;
  * */public class Ctrl_Ejercicios_ConfigACT {
      private static Ctrl_Ejercicios_ConfigACT ctrlSing = null;
     private int numEjecuciones = 5;
+    private int tiempoTestSegundos = 10;
     private int contador;
     private final List<Entrada_Diccionario> listaEntradas;
 
@@ -36,9 +37,11 @@ import java.util.List;
 
     //SETTER Y GETTER
     public void setNumEjecuciones(int numEjecciones){ this.numEjecuciones = numEjecciones;}
+    public void settiempoTestSegundos(int tiempoTestSegundos){ this.tiempoTestSegundos = tiempoTestSegundos;}
     public void setListaEntradas(int contador){ this.contador = contador;}
 
     public int getNumEjecuciones(){return this.numEjecuciones;}
+    public int gettiempoTestSegundos(){return this.tiempoTestSegundos;}
     public List<Entrada_Diccionario> getListaEntradas(){return this.listaEntradas;}
     public int getContador(){return this.contador;}
 

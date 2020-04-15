@@ -30,6 +30,7 @@ public class OpcionesPreferenciasAct extends AppCompatActivity {
         this.numSeg.setAdapter(adap1);
 
         //EVENTOS SPINNERS
+        //SpinnerNum-Preguntas
         this.numPreg.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -64,10 +65,8 @@ public class OpcionesPreferenciasAct extends AppCompatActivity {
                         break;
                 }
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
                 // sometimes you need nothing here
             }
         });

@@ -1,6 +1,7 @@
 package com.example.diccionario.Activities;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -23,6 +24,7 @@ public class EjercicioAct extends AppCompatActivity {
     private int contador_Aciertos;
     private int contador_Pregutas;
     private Ctrl_Ejercicios_ConfigACT control = Ctrl_Ejercicios_ConfigACT.getInstance();
+    private boolean butonClick = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,7 @@ public class EjercicioAct extends AppCompatActivity {
         this.btn1_1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                butonClick = true;
                 acierto = control.comprobarCoincidencias(btn1_1.getText().toString(), palabra_Adivinar.getText().toString());
 
                 if (acierto) {
@@ -54,7 +57,7 @@ public class EjercicioAct extends AppCompatActivity {
         this.btn1_2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                butonClick = true;
                 acierto = control.comprobarCoincidencias(btn1_2.getText().toString(), palabra_Adivinar.getText().toString());
 
                 if (acierto) {
@@ -69,7 +72,7 @@ public class EjercicioAct extends AppCompatActivity {
         this.btn2_1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                butonClick = true;
                 acierto = control.comprobarCoincidencias(btn2_1.getText().toString(), palabra_Adivinar.getText().toString());
 
                 if (acierto) {
@@ -84,6 +87,7 @@ public class EjercicioAct extends AppCompatActivity {
         this.btn2_2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                butonClick = true;
                 acierto = control.comprobarCoincidencias(btn2_2.getText().toString(), palabra_Adivinar.getText().toString());
 
                 if (acierto) {
@@ -93,9 +97,12 @@ public class EjercicioAct extends AppCompatActivity {
             }
         });
 
+
+
     }
 
     private void refrescarElementos() {
+
         List<Entrada_Diccionario> lista_palabras = new ArrayList<Entrada_Diccionario>();
         Boolean elem_Exist = control.refrescarElementos_ctrl(lista_palabras);
 
@@ -110,10 +117,22 @@ public class EjercicioAct extends AppCompatActivity {
 
             contador_Pregutas++;
 
+            //Pausa de pantalla
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if(!butonClick){
+                        refrescarElementos();
+                    }
+                }
+            }, control.gettiempoTestSegundos() * 1000);
+
         } else {
             Bundle bundPutuacion = new Bundle();
             bundPutuacion.putInt("puntuacion", contador_Aciertos);
             bundPutuacion.putInt("contador", contador_Pregutas);
+
             Intent intent = new Intent(EjercicioAct.this, ResultadoFinalActivity.class);
             intent.putExtras(bundPutuacion);
             startActivity(intent);
