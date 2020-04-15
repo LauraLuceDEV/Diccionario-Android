@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activities.ResultadoFinalActivity"></activity>
+        <activity android:name=".Activities.OpcionesPreferenciasAct"></activity>
+        <activity android:name=".Activities.ResultadoFinalActivity" />
         <activity android:name=".Activities.MainActivity" />
         <activity android:name=".Activities.EjercicioAct" />
         <activity android:name=".Activities.ConsultasActivity" />

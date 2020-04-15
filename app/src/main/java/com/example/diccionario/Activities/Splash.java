@@ -5,7 +5,7 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.example.diccionario.Controls.ControladorPPL;
+import com.example.diccionario.Controls.CtrlPPL;
 import com.example.diccionario.R;
 
 public class Splash extends AppCompatActivity {
@@ -15,7 +15,7 @@ public class Splash extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        ControladorPPL.preparar_DB_DiccionarioDAO_SQLite(getApplicationContext());
+        CtrlPPL.preparar_DB_DiccionarioDAO_SQLite(getApplicationContext());
 
         new Handler().postDelayed(new Runnable() {
             @Override

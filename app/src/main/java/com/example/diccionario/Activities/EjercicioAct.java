@@ -6,13 +6,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
-import com.example.diccionario.Controls.Controlador_Ejercicios_ACT;
+import com.example.diccionario.Controls.Ctrl_Ejercicios_ConfigACT;
 import com.example.diccionario.POJOS.Entrada_Diccionario;
 import com.example.diccionario.R;
-
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class EjercicioAct extends AppCompatActivity {
     private Button btn1_1;
@@ -20,9 +19,10 @@ public class EjercicioAct extends AppCompatActivity {
     private Button btn2_1;
     private Button btn2_2;
     private TextView palabra_Adivinar;
-    private Controlador_Ejercicios_ACT control;
     private Boolean acierto;
     private int contador_Aciertos;
+    private int contador_Pregutas;
+    private Ctrl_Ejercicios_ConfigACT control = Ctrl_Ejercicios_ConfigACT.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +35,6 @@ public class EjercicioAct extends AppCompatActivity {
         this.btn2_2 = findViewById(R.id.btn2_2);
         this.palabra_Adivinar = findViewById(R.id.tv_Test);
 
-        control = new Controlador_Ejercicios_ACT();
         refrescarElementos();
 
         //1_1_BTN
@@ -91,7 +90,6 @@ public class EjercicioAct extends AppCompatActivity {
                     contador_Aciertos++;
                 }
                 refrescarElementos();
-
             }
         });
 
@@ -110,9 +108,12 @@ public class EjercicioAct extends AppCompatActivity {
             this.btn2_1.setText(lista_desordenada.get(2).getPalabra_ing());
             this.btn2_2.setText(lista_desordenada.get(3).getPalabra_ing());
 
+            contador_Pregutas++;
+
         } else {
             Bundle bundPutuacion = new Bundle();
             bundPutuacion.putInt("puntuacion", contador_Aciertos);
+            bundPutuacion.putInt("contador", contador_Pregutas);
             Intent intent = new Intent(EjercicioAct.this, ResultadoFinalActivity.class);
             intent.putExtras(bundPutuacion);
             startActivity(intent);

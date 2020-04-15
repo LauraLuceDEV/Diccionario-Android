@@ -4,9 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
 import com.example.diccionario.POJOS.Entrada_Diccionario;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -14,6 +12,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+
 
 public class Diccionario_DAO extends SQLiteOpenHelper {
     private static Diccionario_DAO Dicc_Singleton;
@@ -269,7 +268,7 @@ public class Diccionario_DAO extends SQLiteOpenHelper {
      *
      * @param entrada - instancia que vamos a comprobar antes de insertarla
      */
-    public boolean cheking_palabraExiste_in_DB(Entrada_Diccionario entrada) {
+    private boolean cheking_palabraExiste_in_DB(Entrada_Diccionario entrada) {
         boolean coincidence = false;
         String sql = "SELECT * FROM Entrada";
 
@@ -288,7 +287,11 @@ public class Diccionario_DAO extends SQLiteOpenHelper {
     }
 
     /**
-     * Nos devuelve la entrada a partir de la palabra en inglés/español
+     * Nos devuelve 0  si no se ha encontrado la palabra en inglés o en español
+     * Nos devuelve 1 si se ha encontrado la palabra en inglés o en español
+     *
+     * @param palabra 'String' a buscar en nuestra DB embebida
+     * @param entrada instancia que se nos completará al haber coincidencias tanto de la palabra en inglés o español
      */
     public int buscarPalabra(String palabra, Entrada_Diccionario entrada) {
         int res = 0;
@@ -375,19 +378,19 @@ public class Diccionario_DAO extends SQLiteOpenHelper {
 
             } else if (op_alfaNum.equalsIgnoreCase("Nº Aciertos") && op_ingEsp.equalsIgnoreCase("Inglés") && op_palabExpres.equalsIgnoreCase("Palabra")) {
                 sql = "SELECT * FROM Entrada WHERE pabla_tipo In ('Sust', 'Adj', 'Adv', 'Verbo') " +
-                        "ORDER BY num_aciertos ASC, palabra_eng ASC";
+                        "ORDER BY num_aciertos DESC, palabra_eng ASC";
 
             } else if (op_alfaNum.equalsIgnoreCase("Nº Aciertos") && op_ingEsp.equalsIgnoreCase("Inglés") && op_palabExpres.equalsIgnoreCase("Expresión")) {
                 sql = "SELECT * FROM Entrada WHERE pabla_tipo = 'Expres' " +
-                        "ORDER BY num_aciertos ASC, palabra_eng ASC";
+                        "ORDER BY num_aciertos DESC, palabra_eng ASC";
 
             } else if (op_alfaNum.equalsIgnoreCase("Nº Aciertos") && op_ingEsp.equalsIgnoreCase("Español") && op_palabExpres.equalsIgnoreCase("Palabra")) {
                 sql = "SELECT * FROM Entrada WHERE pabla_tipo In ('Sust', 'Adj', 'Adv', 'Verbo') " +
-                        "ORDER BY num_aciertos ASC, palabra_esp ASC";
+                        "ORDER BY num_aciertos DESC, palabra_esp ASC";
 
             } else if (op_alfaNum.equalsIgnoreCase("Nº Aciertos") && op_ingEsp.equalsIgnoreCase("Español") && op_palabExpres.equalsIgnoreCase("Expresión")) {
                 sql = "SELECT * FROM Entrada WHERE pabla_tipo = 'Expres' " +
-                        "ORDER BY num_aciertos ASC, palabra_esp ASC";
+                        "ORDER BY num_aciertos DESC, palabra_esp ASC";
 
             }
             //op_palabExpres == null
@@ -399,10 +402,10 @@ public class Diccionario_DAO extends SQLiteOpenHelper {
                 sql = "SELECT * FROM Entrada ORDER BY palabra_esp ASC";
 
             } else if (op_alfaNum.equalsIgnoreCase("Nº Aciertos") && op_ingEsp.equalsIgnoreCase("Inglés")) {
-                sql = "SELECT * FROM Entrada ORDER BY num_aciertos ASC, palabra_eng ASC";
+                sql = "SELECT * FROM Entrada ORDER BY num_aciertos DESC, palabra_eng ASC";
 
             } else if (op_alfaNum.equalsIgnoreCase("Nº Aciertos") && op_ingEsp.equalsIgnoreCase("Español")) {
-                sql = "SELECT * FROM Entrada ORDER BY num_aciertos ASC, palabra_esp ASC";
+                sql = "SELECT * FROM Entrada ORDER BY num_aciertos DESC, palabra_esp ASC";
 
             }
             //op_ingEsp == null
@@ -449,7 +452,7 @@ public class Diccionario_DAO extends SQLiteOpenHelper {
             if (op_alfaNum.equalsIgnoreCase("Alfabético")) {
                 sql = "SELECT * FROM Entrada ORDER BY palabra_eng ASC";
             } else {
-                sql = "SELECT * FROM Entrada ORDER BY num_aciertos ASC";
+                sql = "SELECT * FROM Entrada ORDER BY num_aciertos DESC";
             }
         }//op_alfaNum == null && op_palabExpres == null
         else if (op_ingEsp != null) {
@@ -522,6 +525,24 @@ public class Diccionario_DAO extends SQLiteOpenHelper {
         }
         cursor.close();
         return list_Entradas;
+    }
+
+    /**
+     * Nos actualiza las puntuaciones de nuestras entradas dependiendo si hemos acertado: sumará +1
+     * O si hemos fallado: volverá a ser '0'
+     * */
+    public void actualizarPuntuaciones(int puntuacion, String palabraING){
+        SQLiteDatabase db = getReadableDatabase();;
+        String sqlUp = "";
+
+        if(puntuacion == 0){
+            sqlUp = "UPDATE Entrada SET num_aciertos = " + puntuacion +
+                    " WHERE palabra_eng = '" +palabraING+"'";
+        }else{
+            sqlUp = "UPDATE Entrada SET num_aciertos =  num_aciertos + 1 WHERE palabra_eng = '" +palabraING+ "'";
+        }
+
+        db.execSQL(sqlUp);
     }
 
 

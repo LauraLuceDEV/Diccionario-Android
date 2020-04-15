@@ -1,7 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--VALORES PARA LOS SPINERS DE LAS CONSULTAS-->
     <string-array name="valores_array1">
         <item>Alfabético</item>
         <item>Nº Aciertos</item>
+    </string-array>
+
+    <string-array name="valores_array2">
+        <item>Inglés</item>
+        <item>Español</item>
+    </string-array>
+
+    <string-array name="valores_array3">
+        <item>Palabra</item>
+        <item>Expresión</item>
+    </string-array>
+
+    <!--VALORES PARA LOS SPINERS DE LAS PREFERENCIAS/CONFIG-->
+    <string-array name="valoresPref">
+        <item>5</item>
+        <item>10</item>
+        <item>15</item>
+        <item>20</item>
+        <item>25</item>
+        <item>30</item>
     </string-array>
 </resources>

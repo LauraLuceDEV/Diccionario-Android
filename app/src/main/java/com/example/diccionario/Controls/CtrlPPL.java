@@ -4,7 +4,7 @@ import android.content.Context;
 import com.example.diccionario.Models.Diccionario_DAO;
 import java.util.Date;
 
-public class ControladorPPL {
+public class CtrlPPL {
 
     /**
      * Preparamos la DBDiccionario que estará embebida en nuestra aplicación

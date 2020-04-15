@@ -45,7 +45,7 @@ public class Entrada_Diccionario {
         this.palabra_tipo = palabra_tipo;
         this.fecha_intro = fecha_intro;
         this.fecha_latest_test = fecha_latest_test;
-        this.num_aciertos = 0;
+        this.num_aciertos = num_aciertos;
     }
 
     //SETTER Y GETTER

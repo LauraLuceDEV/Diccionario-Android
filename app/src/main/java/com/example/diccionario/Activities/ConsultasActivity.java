@@ -9,7 +9,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import com.example.diccionario.Adapter.Adaptador_Entradas;
-import com.example.diccionario.Controls.Controlador_Consultas;
+import com.example.diccionario.Controls.Ctrl_Consultas;
 import com.example.diccionario.POJOS.Entrada_Diccionario;
 import com.example.diccionario.R;
 
@@ -50,7 +50,7 @@ public class ConsultasActivity extends AppCompatActivity {
         this.sp_WordType.setAdapter(adaptador3);
 
         //Rellenamos el Listado por defecto con todas las entradas
-        this.entradas = Controlador_Consultas.obtenerListadoEntradas();
+        this.entradas = Ctrl_Consultas.obtenerListadoEntradas();
 
         //Rellenamos con el Adapter
         Adaptador_Entradas adapt = new Adaptador_Entradas(this, entradas);
@@ -61,7 +61,7 @@ public class ConsultasActivity extends AppCompatActivity {
         this.btnSpinners.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                entradas = Controlador_Consultas.getArrayConsultasSpinners(sp_alfaNum.getSelectedItem().toString(),
+                entradas = Ctrl_Consultas.getArrayConsultasSpinners(sp_alfaNum.getSelectedItem().toString(),
                         sp_Languajes.getSelectedItem().toString(), sp_WordType.getSelectedItem().toString());
 
                 Adaptador_Entradas adapt = new Adaptador_Entradas(ConsultasActivity.this, entradas);
@@ -73,7 +73,7 @@ public class ConsultasActivity extends AppCompatActivity {
         btn_et.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                entradas = Controlador_Consultas.getArrayConsultasEditText(et_entry.getText().toString());
+                entradas = Ctrl_Consultas.getArrayConsultasEditText(et_entry.getText().toString());
 
                 Adaptador_Entradas adapt = new Adaptador_Entradas(ConsultasActivity.this, entradas);
                 listado_Entradas.setAdapter(adapt);

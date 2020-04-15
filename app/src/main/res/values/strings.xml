@@ -5,6 +5,7 @@
     <string name="intro">INTRODUCIR PALABRAS</string>
     <string name="consult">CONSULTAR PALABRAS</string>
     <string name="test">EJERCICIOS PARA PRACTICAR</string>
+    <string name="pref">MENÚ PREFERENCIAS</string>
 
     <!--IntroducirPalabraActivity-->
     <string name="insert_head">INSERTE LOS DATOS DE LA PALABRA</string>
@@ -25,4 +26,9 @@
     <string name="order3">3 ORDEN</string>
     <string name="busqueda">BÚSQUEDA</string>
     <string name="busqueda_palbExpr">Palabra a búscar</string>
+
+    <!--Menu preferencias-->
+    <string name="titlePref">AJUSTES</string>
+    <string name="numTest">Número de preguntas\nen los test:</string>
+    <string name="segTest">Número de segundos\nen los test:</string>
 </resources>

@@ -7,7 +7,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.diccionario.Controls.Controlador_Introducir_Palabra_ACT;
+import com.example.diccionario.Controls.Ctrl_Introducir_Palabra_ACT;
 import com.example.diccionario.R;
 
 public class IntroducirPalabraAct extends AppCompatActivity {
@@ -30,7 +30,7 @@ public class IntroducirPalabraAct extends AppCompatActivity {
         this.btn_InsertarEntrada.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int camposEditTex = Controlador_Introducir_Palabra_ACT.checking_CamposCompletados(et_palabraING.getText().toString(),
+                int camposEditTex = Ctrl_Introducir_Palabra_ACT.checking_CamposCompletados(et_palabraING.getText().toString(),
                         et_palabraESP.getText().toString(), et_palabraTIPO.getText().toString());
 
                 if (camposEditTex == 0) {
@@ -38,7 +38,7 @@ public class IntroducirPalabraAct extends AppCompatActivity {
                     toast_Campos.show();
 
                 } else {
-                    int res_Entrada = Controlador_Introducir_Palabra_ACT.insertarPalabra(et_palabraING.getText().toString(),
+                    int res_Entrada = Ctrl_Introducir_Palabra_ACT.insertarPalabra(et_palabraING.getText().toString(),
                             et_palabraESP.getText().toString(), et_palabraTIPO.getText().toString());
 
                     if (res_Entrada == 1) {

@@ -5,7 +5,7 @@ import com.example.diccionario.POJOS.Entrada_Diccionario;
 
 import java.util.List;
 
-public class Controlador_Consultas {
+public class Ctrl_Consultas {
 
     /**
      * Obtenermos el Listado de las entradas que tenemos en la DB

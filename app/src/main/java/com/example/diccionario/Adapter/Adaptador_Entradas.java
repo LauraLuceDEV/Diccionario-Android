@@ -11,11 +11,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.example.diccionario.Controls.ControladorPPL;
+import com.example.diccionario.Controls.CtrlPPL;
 import com.example.diccionario.POJOS.Entrada_Diccionario;
 import com.example.diccionario.R;
 
-import java.util.List;
 import java.util.Locale;
 
 public class Adaptador_Entradas extends ArrayAdapter<Entrada_Diccionario> {
@@ -50,10 +49,10 @@ public class Adaptador_Entradas extends ArrayAdapter<Entrada_Diccionario> {
         tvPalabraTipo.setText(entrada.getPalabraTipo());
 
         TextView tvFechaIntro = item.findViewById(R.id.palabra_fechaintro);
-        tvFechaIntro.setText(ControladorPPL.obtenerFechaenString(entrada.getFechaIntro()));
+        tvFechaIntro.setText(CtrlPPL.obtenerFechaenString(entrada.getFechaIntro()));
 
         TextView tvFechaLatest = item.findViewById(R.id.palabra_fechaLastTest);
-        tvFechaLatest.setText(ControladorPPL.obtenerFechaenString(entrada.getFecha_latest_test()));
+        tvFechaLatest.setText(CtrlPPL.obtenerFechaenString(entrada.getFecha_latest_test()));
 
         TextView tvPalabraAciertos = item.findViewById(R.id.palabra_aciertos);
         tvPalabraAciertos.setText(String.valueOf(entrada.getNumAciertos()));

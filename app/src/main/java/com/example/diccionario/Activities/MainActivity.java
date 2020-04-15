@@ -12,6 +12,7 @@ public class MainActivity extends AppCompatActivity {
     private Button btn_Introd_palab_ACT;
     private Button btn_Consult_palab_ACT;
     private Button btn_Ejercicios_ACT;
+    private Button btn_preferencias;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
         this.btn_Introd_palab_ACT = findViewById(R.id.introd_palabras);
         this.btn_Consult_palab_ACT = findViewById(R.id.consult_palabras);
         this.btn_Ejercicios_ACT = findViewById(R.id.test_palabras);
+        this.btn_preferencias = findViewById(R.id.menuPref);
 
         //-------------------
         // ACCIONES - LISTENERS
@@ -49,6 +51,15 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent int_Intro_palabra = new Intent(MainActivity.this, EjercicioAct.class);
                 startActivity(int_Intro_palabra);
+            }
+        });
+
+        //Acceder a Preferemcias/Configuración
+        this.btn_preferencias.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent int_Pref = new Intent(MainActivity.this, OpcionesPreferenciasAct.class);
+                startActivity(int_Pref);
             }
         });
 

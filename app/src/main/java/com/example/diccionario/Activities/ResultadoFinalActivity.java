@@ -24,8 +24,9 @@ public class ResultadoFinalActivity extends AppCompatActivity {
         this.txtFinal = findViewById(R.id.tv_Result_Final);
 
         //Bundle
-        int bundle_res = getIntent().getIntExtra("puntuacion", 0);
-        this.txtFinal.setText("¡HA OBTENIDO " + bundle_res + " PUNTOS DE 5!");
+        int bundle_resPunt = getIntent().getIntExtra("puntuacion", 0);
+        int bundle_resPreg = getIntent().getIntExtra("contador", 0);
+        this.txtFinal.setText("¡HA OBTENIDO " + bundle_resPunt + " PUNTOS DE " +bundle_resPreg+ "!");
 
 
         //Listeners

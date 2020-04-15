@@ -5,7 +5,7 @@ import android.text.Editable;
 import com.example.diccionario.Models.Diccionario_DAO;
 import com.example.diccionario.POJOS.Entrada_Diccionario;
 
-public class Controlador_Introducir_Palabra_ACT {
+public class Ctrl_Introducir_Palabra_ACT {
 
 
     /**
