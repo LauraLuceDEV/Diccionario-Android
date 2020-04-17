@@ -1,15 +1,22 @@
 package com.example.diccionario.Activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import com.example.diccionario.Controls.Ctrl_Ejercicios_ConfigACT;
 import com.example.diccionario.POJOS.Entrada_Diccionario;
 import com.example.diccionario.R;
+import com.google.android.material.navigation.NavigationView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,19 +30,31 @@ public class EjercicioAct extends AppCompatActivity {
     private Boolean acierto;
     private int contador_Aciertos;
     private int contador_Pregutas;
-    private Ctrl_Ejercicios_ConfigACT control = Ctrl_Ejercicios_ConfigACT.getInstance();
-    private boolean butonClick = false;
+    private Ctrl_Ejercicios_ConfigACT control;
+    private boolean butonClick;
+    private NavigationView menuLateral;
+    private Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ejercicios);
 
+        handler = new Handler();
+
         this.btn1_1 = findViewById(R.id.btn1_1);
         this.btn1_2 = findViewById(R.id.btn1_2);
         this.btn2_1 = findViewById(R.id.btn2_1);
         this.btn2_2 = findViewById(R.id.btn2_2);
         this.palabra_Adivinar = findViewById(R.id.tv_Test);
+        this.menuLateral = findViewById(R.id.navview);
+        butonClick = false;
+
+        //SharedPreferences por defecto: 5preg / 10seg
+        SharedPreferences pref = getSharedPreferences("test", Context.MODE_PRIVATE);
+
+        //Le pasamos por el constructor los elementos de las sharedPreference
+        control = new Ctrl_Ejercicios_ConfigACT(pref.getInt("numPreg", 5), pref.getInt("numSeg", 10));
 
         refrescarElementos();
 
@@ -97,6 +116,35 @@ public class EjercicioAct extends AppCompatActivity {
             }
         });
 
+        //NAVIGATION VIEW - Menu Lateral
+        this.menuLateral.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    case R.id.menuIntroducirPalabras:
+                        Intent int_Intro_palabra = new Intent(EjercicioAct.this, IntroducirPalabraAct.class);
+                        startActivity(int_Intro_palabra);
+
+                        break;
+                    case R.id.menuConsultPalabras:
+                        Intent int_Consultar_palabra = new Intent(EjercicioAct.this, ConsultasActivity.class);
+                        startActivity(int_Consultar_palabra);
+                        break;
+
+                    case R.id.menuEjercicios:
+                        Intent int_Ejercicio = new Intent(EjercicioAct.this, EjercicioAct.class);
+                        startActivity(int_Ejercicio);
+                        break;
+
+                    case R.id.menuConfigPreferencias:
+                        Intent int_Preferencias = new Intent(EjercicioAct.this, OpcionesPreferenciasAct.class);
+                        startActivity(int_Preferencias);
+                        break;
+                }
+                return true;
+            }
+        });
+
 
 
     }
@@ -105,8 +153,9 @@ public class EjercicioAct extends AppCompatActivity {
 
         List<Entrada_Diccionario> lista_palabras = new ArrayList<Entrada_Diccionario>();
         Boolean elem_Exist = control.refrescarElementos_ctrl(lista_palabras);
-
+        handler.removeCallbacksAndMessages(null);
         if (elem_Exist) {
+            butonClick = false;
             this.palabra_Adivinar.setText(lista_palabras.get(0).getPalabra_esp());
             List<Entrada_Diccionario> lista_desordenada = control.obtenerElemDesordenados(lista_palabras);
 
@@ -118,7 +167,6 @@ public class EjercicioAct extends AppCompatActivity {
             contador_Pregutas++;
 
             //Pausa de pantalla
-            final Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -138,5 +186,11 @@ public class EjercicioAct extends AppCompatActivity {
             startActivity(intent);
             finish();
         }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        butonClick = true;
     }
 }

@@ -2,8 +2,8 @@ package com.example.diccionario.Adapter;
 
 import android.content.Context;
 import android.speech.tts.TextToSpeech;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +22,7 @@ public class Adaptador_Entradas extends ArrayAdapter<Entrada_Diccionario> {
     private TextToSpeech textToSpeech;
 
     public Adaptador_Entradas(@NonNull Context context, @NonNull Entrada_Diccionario[] lst) {
-        super(context, R.layout.plantilla_listview_palabras ,lst);
+        super(context, R.layout.listview_entradasdiccionario,lst);
         spanish = new Locale("es", "ES");
         textToSpeech=new TextToSpeech(context, new TextToSpeech.OnInitListener() {
             @Override
@@ -35,7 +35,7 @@ public class Adaptador_Entradas extends ArrayAdapter<Entrada_Diccionario> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(getContext());
-        View item = inflater.inflate(R.layout.plantilla_listview_palabras, null);
+        View item = inflater.inflate(R.layout.listview_entradasdiccionario, null);
 
         final Entrada_Diccionario entrada = getItem(position);
 

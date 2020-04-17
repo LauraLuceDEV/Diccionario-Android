@@ -1,7 +1,10 @@
 package com.example.diccionario.Activities;
 
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -12,6 +15,7 @@ import com.example.diccionario.Adapter.Adaptador_Entradas;
 import com.example.diccionario.Controls.Ctrl_Consultas;
 import com.example.diccionario.POJOS.Entrada_Diccionario;
 import com.example.diccionario.R;
+import com.google.android.material.navigation.NavigationView;
 
 public class ConsultasActivity extends AppCompatActivity {
     private Spinner sp_alfaNum;
@@ -22,6 +26,7 @@ public class ConsultasActivity extends AppCompatActivity {
     private Button btn_et;
     private Entrada_Diccionario[] entradas;
     private EditText et_entry;
+    private NavigationView menuLateral;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +40,7 @@ public class ConsultasActivity extends AppCompatActivity {
         this.btnSpinners = findViewById(R.id.btnParam);
         this.btn_et = findViewById(R.id.btnCustom);
         this.et_entry = findViewById(R.id.et_entry);
+        this.menuLateral = findViewById(R.id.navview);
 
         //Rellenamos lo Spinners
         //1-SPINER
@@ -81,5 +87,33 @@ public class ConsultasActivity extends AppCompatActivity {
         });
 
 
+        //NAVIGATION VIEW - Menu Lateral
+        this.menuLateral.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    case R.id.menuIntroducirPalabras:
+                        Intent int_Intro_palabra = new Intent(ConsultasActivity.this, IntroducirPalabraAct.class);
+                        startActivity(int_Intro_palabra);
+
+                        break;
+                    case R.id.menuConsultPalabras:
+                        Intent int_Consultar_palabra = new Intent(ConsultasActivity.this, ConsultasActivity.class);
+                        startActivity(int_Consultar_palabra);
+                        break;
+
+                    case R.id.menuEjercicios:
+                        Intent int_Ejercicio = new Intent(ConsultasActivity.this, EjercicioAct.class);
+                        startActivity(int_Ejercicio);
+                        break;
+
+                    case R.id.menuConfigPreferencias:
+                        Intent int_Preferencias = new Intent(ConsultasActivity.this, OpcionesPreferenciasAct.class);
+                        startActivity(int_Preferencias);
+                        break;
+                }
+                return true;
+            }
+        });
     }
 }

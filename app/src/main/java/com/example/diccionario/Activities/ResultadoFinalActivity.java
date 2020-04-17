@@ -1,36 +1,38 @@
 package com.example.diccionario.Activities;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
-
 import com.example.diccionario.R;
+import com.google.android.material.navigation.NavigationView;
+
 
 public class ResultadoFinalActivity extends AppCompatActivity {
-    private ImageButton btnJugar;
-    private ImageButton btnMenu;
-    private TextView txtFinal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resultado_final);
 
-        this.btnJugar = findViewById(R.id.btn_volverJugar);
-        this.btnMenu = findViewById(R.id.btn_volverMenu);
-        this.txtFinal = findViewById(R.id.tv_Result_Final);
+        ImageButton btnJugar = findViewById(R.id.btn_volverJugar);
+        ImageButton btnMenu = findViewById(R.id.btn_volverMenu);
+        TextView txtFinal = findViewById(R.id.tv_Result_Final);
+        NavigationView menuLateral = findViewById(R.id.navview);
 
         //Bundle
         int bundle_resPunt = getIntent().getIntExtra("puntuacion", 0);
         int bundle_resPreg = getIntent().getIntExtra("contador", 0);
-        this.txtFinal.setText("¡HA OBTENIDO " + bundle_resPunt + " PUNTOS DE " +bundle_resPreg+ "!");
+        txtFinal.setText("¡HA OBTENIDO " + bundle_resPunt + " PUNTOS DE " + bundle_resPreg + "!");
 
 
         //Listeners
-        this.btnMenu.setOnClickListener(new View.OnClickListener() {
+        btnMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ResultadoFinalActivity.this, MainActivity.class);
@@ -40,13 +42,43 @@ public class ResultadoFinalActivity extends AppCompatActivity {
             }
         });
 
-        this.btnJugar.setOnClickListener(new View.OnClickListener() {
+        btnJugar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ResultadoFinalActivity.this, EjercicioAct.class);
                 startActivity(intent);
                 finish();
 
+            }
+        });
+
+
+        //NAVIGATION VIEW - Menu Lateral
+        menuLateral.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    case R.id.menuIntroducirPalabras:
+                        Intent int_Intro_palabra = new Intent(ResultadoFinalActivity.this, IntroducirPalabraAct.class);
+                        startActivity(int_Intro_palabra);
+
+                        break;
+                    case R.id.menuConsultPalabras:
+                        Intent int_Consultar_palabra = new Intent(ResultadoFinalActivity.this, ConsultasActivity.class);
+                        startActivity(int_Consultar_palabra);
+                        break;
+
+                    case R.id.menuEjercicios:
+                        Intent int_Ejercicio = new Intent(ResultadoFinalActivity.this, EjercicioAct.class);
+                        startActivity(int_Ejercicio);
+                        break;
+
+                    case R.id.menuConfigPreferencias:
+                        Intent int_Preferencias = new Intent(ResultadoFinalActivity.this, OpcionesPreferenciasAct.class);
+                        startActivity(int_Preferencias);
+                        break;
+                }
+                return true;
             }
         });
     }

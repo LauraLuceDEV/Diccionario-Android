@@ -5,6 +5,7 @@
     <string name="intro">INTRODUCIR PALABRAS</string>
     <string name="consult">CONSULTAR PALABRAS</string>
     <string name="test">EJERCICIOS PARA PRACTICAR</string>
+    <string name="test2">EJERCICIOS</string>
     <string name="pref">MENÚ PREFERENCIAS</string>
 
     <!--IntroducirPalabraActivity-->
@@ -31,4 +32,7 @@
     <string name="titlePref">AJUSTES</string>
     <string name="numTest">Número de preguntas\nen los test:</string>
     <string name="segTest">Número de segundos\nen los test:</string>
+
+    <!--NAV BAR-->
+    <string name="otros">Otras opciones:</string>
 </resources>

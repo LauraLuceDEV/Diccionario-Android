@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/menuIntroducirPalabras"
+            android:icon="@mipmap/ic_launcher"
+            android:title="@string/intro"/>
+        <item
+            android:id="@+id/menuConsultPalabras"
+            android:icon="@mipmap/ic_launcher"
+            android:title="@string/consult"/>
+        <item
+            android:id="@+id/menuEjercicios"
+            android:icon="@mipmap/ic_launcher"
+            android:title="@string/test2"/>
+    </group>
+
+    <item
+        android:id="@+id/navigation_subheader"
+        android:title="@string/otros">
+        <menu>
+            <item
+                android:id="@+id/menuConfigPreferencias"
+                android:icon="@drawable/dicc"
+                android:title="@string/pref"/>
+        </menu>
+    </item>
+</menu>

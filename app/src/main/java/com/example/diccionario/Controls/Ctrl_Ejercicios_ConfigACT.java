@@ -5,33 +5,20 @@ import com.example.diccionario.POJOS.Entrada_Diccionario;
 import java.util.Collections;
 import java.util.List;
 
-
-
-/**
- * Nuestro 'controlador' será un Singleton ya que,
- * en nuestra pantalla de preferencias se realizan una serie de cambios, y para que estos cambios se mantengan tenemos que realizarlo
- * */public class Ctrl_Ejercicios_ConfigACT {
-     private static Ctrl_Ejercicios_ConfigACT ctrlSing = null;
-    private int numEjecuciones = 5;
-    private int tiempoTestSegundos = 10;
+public class Ctrl_Ejercicios_ConfigACT {
+    private int numEjecuciones;
+    private int tiempoTestSegundos;
     private int contador;
     private final List<Entrada_Diccionario> listaEntradas;
 
 
     //CONSTRUCTOR
-    private Ctrl_Ejercicios_ConfigACT() {
+    public Ctrl_Ejercicios_ConfigACT(int numEjecuciones, int tiempoSeg) {
+        this.numEjecuciones = numEjecuciones;
+        this.tiempoTestSegundos = tiempoSeg;
         contador = 0;
         //Obtenemos todas las entradas del diccioanrio
         this.listaEntradas = Diccionario_DAO.getInstance().getListadoEntradas();
-    }
-
-    //Singleton - Lo creamos usando al contructor
-    public static Ctrl_Ejercicios_ConfigACT getInstance(){
-        if(ctrlSing == null) {
-            ctrlSing = new Ctrl_Ejercicios_ConfigACT();
-        }
-
-        return ctrlSing;
     }
 
 
@@ -141,4 +128,30 @@ import java.util.List;
         }
         return coincidencias;
     }
+
+    /**
+     * Método el cuál le pasamos el número, y este nos devolverá la posicion del Spinner en la que se encuentra
+     * */
+    public int obtenerPosicionSpinner(int numPosicionActual) {
+        switch (numPosicionActual){
+            case 10:
+                return 1;
+
+            case 15:
+                return 2;
+
+            case 20:
+                return 3;
+
+            case 25:
+                return 4;
+
+            case 30:
+                return 5;
+
+            default:
+                return 0;
+        }
+    }
+
 }
