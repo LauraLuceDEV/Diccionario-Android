@@ -2,14 +2,20 @@ package com.example.diccionario.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.example.diccionario.Controls.CtrlPPL;
 import com.example.diccionario.Controls.Ctrl_Introducir_Palabra_ACT;
 import com.example.diccionario.R;
 import com.google.android.material.navigation.NavigationView;
@@ -20,12 +26,16 @@ public class IntroducirPalabraAct extends AppCompatActivity {
     private EditText et_palabraTIPO;
     private Button btn_InsertarEntrada;
     private NavigationView menuLateral;
+    //Var estática para el permiso
+    private final static int permisos = 4;
+    private int opcionBackUp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_introducir_palabra);
 
+        this.opcionBackUp = 0;
         this.et_palabraESP = findViewById(R.id.intro_palabraESP);
         this.et_palabraING = findViewById(R.id.intro_palabraENG);
         this.et_palabraTIPO = findViewById(R.id.intro_palabraTIPO);
@@ -52,7 +62,7 @@ public class IntroducirPalabraAct extends AppCompatActivity {
                         toast_Campos.show();
 
                     } else if (res_Entrada == 0) {
-                            Toast toast_Campos = Toast.makeText(IntroducirPalabraAct.this, "ERROR: No se ha podido insertar correctamente su palabra.", Toast.LENGTH_LONG);
+                        Toast toast_Campos = Toast.makeText(IntroducirPalabraAct.this, "ERROR: No se ha podido insertar correctamente su palabra.", Toast.LENGTH_LONG);
                         toast_Campos.show();
 
                     } else if (res_Entrada == -1) {
@@ -89,11 +99,71 @@ public class IntroducirPalabraAct extends AppCompatActivity {
                         Intent int_Preferencias = new Intent(IntroducirPalabraAct.this, OpcionesPreferenciasAct.class);
                         startActivity(int_Preferencias);
                         break;
+
+                    case R.id.realizarBackUp:
+                        opcionBackUp = 1;
+                        //Permisos
+                        chequearPermisos();
+                        break;
+
+                    case R.id.resetBackUp:
+                        opcionBackUp = 2;
+                        //Permisos
+                        chequearPermisos();
+                        break;
                 }
                 return true;
             }
         });
 
 
+    }
+
+    public void chequearPermisos() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, permisos);
+
+        } else {
+            if (this.opcionBackUp == 1) {
+                String res = CtrlPPL.realizarBackUpCCTRL();
+                Toast.makeText(IntroducirPalabraAct.this, res, Toast.LENGTH_SHORT).show();
+
+            } else {
+                String res2 = CtrlPPL.obtenerUltimoBackUp();
+                Toast.makeText(IntroducirPalabraAct.this, res2, Toast.LENGTH_SHORT).show();
+            }
+
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case permisos: {
+                // If request is cancelled, the result arrays are empty.
+                boolean permisosAceptados = true;
+                for (int i = 0; i < grantResults.length; i++) {
+                    if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
+                        permisosAceptados = false;
+                    }
+                }
+
+                if (permisosAceptados) {
+                    if (this.opcionBackUp == 1) {
+                        String res = CtrlPPL.realizarBackUpCCTRL();
+                        Toast.makeText(IntroducirPalabraAct.this, res, Toast.LENGTH_SHORT).show();
+
+                    } else {
+                        String res2 = CtrlPPL.obtenerUltimoBackUp();
+                        Toast.makeText(IntroducirPalabraAct.this, res2, Toast.LENGTH_SHORT).show();
+                    }
+
+                } else {
+                    Toast.makeText(IntroducirPalabraAct.this, "No tiene permiso para acceder al almacenamiento interno", Toast.LENGTH_LONG).show();
+                }
+            }
+        }
     }
 }

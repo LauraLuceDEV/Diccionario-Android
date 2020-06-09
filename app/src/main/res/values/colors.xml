@@ -9,4 +9,6 @@
     <color name="verde_gris_less_dark">#14AF3F</color>
     <color name="blanco">#000000</color>
     <color name="negro">#ffffff</color>
+    <color name="enabled">#97DCAB</color>
+    <color name="disabled">#9D9FA2</color>
 </resources>

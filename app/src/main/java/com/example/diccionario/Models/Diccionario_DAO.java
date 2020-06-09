@@ -5,6 +5,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import com.example.diccionario.POJOS.Entrada_Diccionario;
+import com.example.diccionario.Utils.DataTransformation;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -14,6 +16,9 @@ import java.util.List;
 import java.util.Locale;
 
 
+/**
+ * Clase que es la DB embebida de la aplicación
+ * */
 public class Diccionario_DAO extends SQLiteOpenHelper {
     private static Diccionario_DAO Dicc_Singleton;
     private static final String DB = "Diccionario";
@@ -43,7 +48,7 @@ public class Diccionario_DAO extends SQLiteOpenHelper {
 
         //Convertimos los datos
         Date currentTime = Calendar.getInstance().getTime();
-        String currentDate = dateToString(currentTime);
+        String currentDate = DataTransformation.dateToString(currentTime);
 
         db.execSQL(sqlCreate);
 
@@ -251,8 +256,8 @@ public class Diccionario_DAO extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 Entrada_Diccionario entrada = new Entrada_Diccionario(cursor.getString(0), cursor.getString(1),
-                        cursor.getString(2), stringToDate(cursor.getString(3)),
-                        stringToDate(cursor.getString(4)), cursor.getInt(5));
+                        cursor.getString(2), DataTransformation.stringToDate(cursor.getString(3)),
+                        DataTransformation.stringToDate(cursor.getString(4)), cursor.getInt(5));
 
                 list_Entradas.add(entrada);
             } while (cursor.moveToNext());
@@ -305,14 +310,33 @@ public class Diccionario_DAO extends SQLiteOpenHelper {
             entrada.setPalabra_ing(cursor.getString(0));
             entrada.setPalabra_esp(cursor.getString(1));
             entrada.setPalabra_tipo(cursor.getString(2));
-            entrada.setFecha_intro(stringToDate(cursor.getString(3)));
-            entrada.setFecha_latest_test(stringToDate(cursor.getString(4)));
+            entrada.setFecha_intro(DataTransformation.stringToDate(cursor.getString(3)));
+            entrada.setFecha_latest_test(DataTransformation.stringToDate(cursor.getString(4)));
             entrada.setNumAciertos(cursor.getInt(5));
 
             res = 1;
         }
         cursor.close();
         return res;
+    }
+
+    public Entrada_Diccionario getEntradaDiccionariofrompalabraInglesorEspannol(String palabra){
+        Entrada_Diccionario entrada = new Entrada_Diccionario();
+
+        SQLiteDatabase db = getReadableDatabase();
+        String sql = "SELECT * FROM Entrada WHERE palabra_eng = '" + palabra + "' OR palabra_esp = '" + palabra + "'";
+        Cursor cursor = db.rawQuery(sql, null);
+
+        if (cursor.moveToFirst()) {
+            entrada.setPalabra_ing(cursor.getString(0));
+            entrada.setPalabra_esp(cursor.getString(1));
+            entrada.setPalabra_tipo(cursor.getString(2));
+            entrada.setFecha_intro(DataTransformation.stringToDate(cursor.getString(3)));
+            entrada.setFecha_latest_test(DataTransformation.stringToDate(cursor.getString(4)));
+            entrada.setNumAciertos(cursor.getInt(5));
+        }
+        cursor.close();
+        return entrada;
     }
 
     //-----------
@@ -339,7 +363,8 @@ public class Diccionario_DAO extends SQLiteOpenHelper {
         } else {
             db.execSQL("INSERT INTO Entrada (palabra_eng, palabra_esp, pabla_tipo, fecha_intro, fecha_latest_test, num_aciertos) " +
                     "VALUES ('" + entrada.getPalabra_ing() + "', '" + entrada.getPalabra_esp() + "', '" + entrada.getPalabraTipo() + "'," +
-                    "'" + dateToString(entrada.getFechaIntro()) + "', '" + dateToString(entrada.getFecha_latest_test()) + "', " + entrada.getNumAciertos() + ")");
+                    "'" + DataTransformation.dateToString(entrada.getFechaIntro()) + "', '" + DataTransformation.dateToString(entrada.getFecha_latest_test()) + "', "
+                        + entrada.getNumAciertos() + ")");
             res = 1;
         }
         return res;
@@ -481,8 +506,8 @@ public class Diccionario_DAO extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 Entrada_Diccionario entrada = new Entrada_Diccionario(cursor.getString(0), cursor.getString(1),
-                        cursor.getString(2), stringToDate(cursor.getString(3)),
-                        stringToDate(cursor.getString(4)), cursor.getInt(5));
+                        cursor.getString(2), DataTransformation.stringToDate(cursor.getString(3)),
+                        DataTransformation.stringToDate(cursor.getString(4)), cursor.getInt(5));
 
                 list_Entradas.add(entrada);
             } while (cursor.moveToNext());
@@ -517,8 +542,8 @@ public class Diccionario_DAO extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 Entrada_Diccionario entrada = new Entrada_Diccionario(cursor.getString(0), cursor.getString(1),
-                        cursor.getString(2), stringToDate(cursor.getString(3)),
-                        stringToDate(cursor.getString(4)), cursor.getInt(5));
+                        cursor.getString(2), DataTransformation.stringToDate(cursor.getString(3)),
+                        DataTransformation.stringToDate(cursor.getString(4)), cursor.getInt(5));
 
                 list_Entradas.add(entrada);
             } while (cursor.moveToNext());
@@ -545,39 +570,20 @@ public class Diccionario_DAO extends SQLiteOpenHelper {
         db.execSQL(sqlUp);
     }
 
+    //--------------
+    // Actualización de la DB: Para cuando hemos realizado backUp y queremos obternerlo
+    //
+    public int actualizarDatabase(List<Entrada_Diccionario> listado){
+        SQLiteDatabase db = getReadableDatabase();
+        int result = 0;
 
-    //-----------
-    //UTILS
-    //-----------
+        //Se crea la nueva versión de la tabla
+        db.execSQL("DROP TABLE IF EXISTS Entrada");
+        db.execSQL(sqlCreate);
 
-    /**
-     * Cambio de formato DATE a STRING
-     * Nos será necesario a la hora de introducir nuestros datos, ya que SQLiteOpenHelper no acepta del tipo 'DATE'
-     * pero si cadenas de TEXTO
-     *
-     * @param date
-     */
-    public String dateToString(Date date) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
-        return dateFormat.format(date);
-    }
-
-
-    /**
-     * Cambio de formato STRING a DATE.
-     * Nos será necesario a la hora de obtener nuestros datos y transformarlos a POJO
-     * Ya que cuentan con 2 variables de tipo DATE
-     *
-     * @param date
-     */
-    public Date stringToDate(String date) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
-        try {
-            return dateFormat.parse(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
+        for(int i=0; i < listado.size(); i++){
+            result = insertar_EntradaDiccionario(listado.get(i));
         }
-        return Calendar.getInstance().getTime();
+        return result;
     }
-
 }

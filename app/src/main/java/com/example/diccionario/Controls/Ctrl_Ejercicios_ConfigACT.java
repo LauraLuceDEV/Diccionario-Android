@@ -21,6 +21,15 @@ public class Ctrl_Ejercicios_ConfigACT {
         this.listaEntradas = Diccionario_DAO.getInstance().getListadoEntradas();
     }
 
+    public Ctrl_Ejercicios_ConfigACT(){
+        this.listaEntradas = Diccionario_DAO.getInstance().getListadoEntradas();
+    }
+
+    //SETTER Y GETTER
+    public List<Entrada_Diccionario> getEntradasDiccionario(){
+        return this.listaEntradas;
+    }
+
 
     //SETTER Y GETTER
     public void setNumEjecuciones(int numEjecciones){ this.numEjecuciones = numEjecciones;}
@@ -40,10 +49,9 @@ public class Ctrl_Ejercicios_ConfigACT {
      */
     public Boolean refrescarElementos_ctrl(List<Entrada_Diccionario> entradas) {
         boolean continuaTest = false;
-        if (contador < this.numEjecuciones) {
-
+        if (this.contador < this.numEjecuciones) {
             obtenerElemetos(entradas);
-            contador++;
+            this.contador++;
             continuaTest = true;
         }
         return continuaTest;

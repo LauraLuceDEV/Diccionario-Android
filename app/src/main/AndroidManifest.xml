@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.diccionario">
+    <!-- Permisos -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -9,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activities.OpcionesPreferenciasAct"></activity>
+        <activity android:name=".Activities.FlechasAct"></activity>
+        <activity android:name=".Activities.OpcionesPreferenciasAct" />
         <activity android:name=".Activities.ResultadoFinalActivity" />
         <activity android:name=".Activities.MainActivity" />
         <activity android:name=".Activities.EjercicioAct" />

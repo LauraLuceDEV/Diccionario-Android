@@ -11,8 +11,28 @@
             android:title="@string/consult"/>
         <item
             android:id="@+id/menuEjercicios"
+            android:title="@string/test2">
+            <menu>
+                <item
+                    android:id="@+id/ejercicioTipoTest"
+                    android:icon="@drawable/dicc"
+                    android:title="@string/ejerciciosTest"/>
+
+                <item
+                    android:id="@+id/ejercicioTipoFlecha"
+                    android:icon="@drawable/dicc"
+                    android:title="@string/ejerciciosFlechas"/>
+
+                <item
+                    android:id="@+id/ejercicioTipoComecocos"
+                    android:icon="@drawable/dicc"
+                    android:title="@string/ejercicioComecocos"/>
+            </menu>
+        </item>
+        <!--<item
+            android:id="@+id/menuEjercicios"
             android:icon="@mipmap/ic_launcher"
-            android:title="@string/test2"/>
+            android:title="@string/test2"/>-->
     </group>
 
     <item
@@ -23,6 +43,16 @@
                 android:id="@+id/menuConfigPreferencias"
                 android:icon="@drawable/dicc"
                 android:title="@string/pref"/>
+
+            <item
+                android:id="@+id/realizarBackUp"
+                android:icon="@drawable/dicc"
+                android:title="@string/saveBU"/>
+
+            <item
+                android:id="@+id/resetBackUp"
+                android:icon="@drawable/dicc"
+                android:title="@string/resetBU"/>
         </menu>
     </item>
 </menu>

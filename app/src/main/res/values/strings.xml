@@ -4,7 +4,9 @@
     <string name="bienvenida">BIENVENIDO</string>
     <string name="intro">INTRODUCIR PALABRAS</string>
     <string name="consult">CONSULTAR PALABRAS</string>
-    <string name="test">EJERCICIOS PARA PRACTICAR</string>
+    <string name="ejerciciosTest">EJERCICIOS TIPO TEST</string>
+    <string name="ejerciciosFlechas">EJERCICIOS FLECHAS</string>
+    <string name="ejercicioComecocos">¡COMECOCOS!</string>
     <string name="test2">EJERCICIOS</string>
     <string name="pref">MENÚ PREFERENCIAS</string>
 
@@ -35,4 +37,9 @@
 
     <!--NAV BAR-->
     <string name="otros">Otras opciones:</string>
+    <string name="saveBU">Realizar Copia de Seguridad</string>
+    <string name="resetBU">Restaurar Copia de Seguridad</string>
+
+    <!--Ejercicio Flechas-->
+    <string name="tituloFlechas">UNE LAS COINCIDENCIAS</string>
 </resources>

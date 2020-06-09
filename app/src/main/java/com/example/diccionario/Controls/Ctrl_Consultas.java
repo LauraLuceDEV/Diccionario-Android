@@ -2,7 +2,6 @@ package com.example.diccionario.Controls;
 
 import com.example.diccionario.Models.Diccionario_DAO;
 import com.example.diccionario.POJOS.Entrada_Diccionario;
-
 import java.util.List;
 
 public class Ctrl_Consultas {
@@ -13,7 +12,6 @@ public class Ctrl_Consultas {
      * */
     public static Entrada_Diccionario[] obtenerListadoEntradas() {
         List<Entrada_Diccionario> entradaList = Diccionario_DAO.getInstance().getListadoEntradas();
-
         return transformarList_Array(entradaList);
     }
 
@@ -33,7 +31,7 @@ public class Ctrl_Consultas {
     }
 
     /**
-     * Obtenemos un Listacon con las consultas del DAO
+     * Obtenemos un Lista con con las consultas del DAO
      * Y le realizamos una trasnformación a ARRAY
      *
      * @param editText_palabra : Valor del EditText

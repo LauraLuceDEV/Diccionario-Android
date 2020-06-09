@@ -23,7 +23,7 @@
         android:layout_height="match_parent"
         android:layout_margin="16dp"
         android:orientation="vertical"
-        android:weightSum="5">
+        android:weightSum="6">
 
         <Button
             android:id="@+id/introd_palabras"
@@ -54,7 +54,29 @@
             android:layout_marginTop="16dp"
             android:background="@drawable/btnbck"
             style="@style/GreenTextLessDark"
-            android:text="@string/test"
+            android:text="@string/ejerciciosTest"
+            android:textStyle="bold"/>
+
+        <Button
+            android:id="@+id/ejercicioFlechas"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.625"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/btnbck"
+            style="@style/GreenTextLessDark"
+            android:text="@string/ejerciciosFlechas"
+            android:textStyle="bold"/>
+
+        <Button
+            android:id="@+id/ejercicioComecocos"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.625"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/btnbck"
+            style="@style/GreenTextLessDark"
+            android:text="@string/ejercicioComecocos"
             android:textStyle="bold"/>
 
         <Button
